@@ -1,1 +1,0 @@
-# Deploying-Openwhisk-on-Kubernetes
