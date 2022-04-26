@@ -143,8 +143,7 @@ vi calico.yaml
             - name: IP_AUTODETECTION_METHOD
               value: "interface=eth1"
               
-kubectl set env daemonset/calico-node -n kube-system
-IP_AUTODETECTION_METHOD=interface=eth1
+kubectl set env daemonset/calico-node -n kube-system IP_AUTODETECTION_METHOD=interface=eth1
 
 ```
 
