@@ -59,7 +59,29 @@ sudo rm -rf ~/.kube
 ---
 * Start by disabling the swap memory on each server:
 
-```sudo swapoff -a```
+```
+sudo swapoff -a
+sudo sed -i '/ swap / s/^/#/' /etc/fstab
+```
+```
+sudo vi /etc/docker/daemon.json
+press i
+
+Paste below data 
+{
+    "exec-opts": ["native.cgroupdriver=systemd"]
+}
+
+Press Esc:wq! enter
+
+Run :
+sudo systemctl daemon-reload
+
+sudo systemctl restart docker
+
+sudo systemctl restart kubelet
+
+```
 
 * Assign Unique Hostname for Each Server Node 
     * Decide which server to set as the master node. Then enter the command:
