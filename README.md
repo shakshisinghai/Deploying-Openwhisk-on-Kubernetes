@@ -28,6 +28,16 @@ sudo apt-get install -y docker.io
 
 ``` sudo apt-get remove docker docker-engine docker.io containerd runc```
 
+https://askubuntu.com/posts/1367758/edit
+```
+dpkg -l | grep -i docker
+sudo apt remove --purge docker-ce docker-ce-cli containerd.io
+sudo rm -rf /var/lib/docker
+sudo rm -rf /var/lib/containerd
+sudo apt autoremove -y
+sudo apt autoclean
+```
+
 ### **Install Kubernetes and kubeadm**
 ---
 _Note: Repeat on all the nodes_
@@ -133,6 +143,7 @@ kubectl apply -f calico.yaml
 kubectl get namespace
 kubectl get pods --namespace=kube-system
 kubectl describe -n kube-system pod calico-node-5894m
+
 ```
 
 _[Error](https://stackoverflow.com/questions/54465963/calico-node-is-not-ready-bird-is-not-ready-bgp-not-established): calico/node is not ready: BIRD is not ready: BGP not established_
@@ -140,10 +151,10 @@ _[Error](https://stackoverflow.com/questions/54465963/calico-node-is-not-ready-b
 kubectl edit DaemonSet calico-node -n kube-system
 vi calico.yaml
  # Specify interface
-            - name: IP_AUTODETECTION_METHOD
-              value: "interface=eth1"
+           - name: IP_AUTODETECTION_METHOD
+          value: interface=eno1 |en.*
               
-kubectl set env daemonset/calico-node -n kube-system IP_AUTODETECTION_METHOD=interface=eth1
+kubectl set env daemonset/calico-node -n kube-system IP_AUTODETECTION_METHOD=interface=eno1 |en.*
 
 ```
 
@@ -160,7 +171,7 @@ _Note: Run each time you start a new session to make worker node ready_
 
 ``` sudo kubectl get nodes```
 
-![image](https://user-images.githubusercontent.com/37688219/160314631-11a38fcf-f0b8-4ad7-9977-6a112c393fbe.png)
+![image](https://user-images.githubusercontent.com/37688219/168122667-04fb3501-c0f6-4210-9d37-99fb3208d9ff.png)
 
 ### Configuration steps for Openwhisk
 ---
@@ -202,6 +213,9 @@ metrics:
   prometheusEnabled: true
 metrics:
   userMetricsEnabled: true
+invoker:
+  containerFactory:
+    impl: "docker"
 ```
 * **Deploy OpenWhisk using the following commands:**
 ```
@@ -215,6 +229,7 @@ kubectl get pods -n openwhisk
 kubectl logs -n openwhisk owdev-init-couchdb-mqhbl
 kubectl describe node master-node
 kubectl get events --all-namespaces  --sort-by='.metadata.creationTimestamp'
+kubectl describe pod -n openwhisk  owdev-invoker-pjvmt
 ```
 
 * Opening shell for any particular pod
@@ -232,7 +247,10 @@ _Error: Worker Node: (combined from similar events): failed to garbage collect r
 
 ```sudo docker run --rm --privileged -v /var/run/docker.sock:/var/run/docker.sock -v /etc:/etc:ro spotify/docker-gc ```
 
-![image](https://user-images.githubusercontent.com/37688219/160316946-875c0a23-1a96-4a96-8977-677763249e5b.png)
+
+###Openwhisk Installed :
+
+![image](https://user-images.githubusercontent.com/37688219/168123155-1cf6403f-ddad-4b66-9f47-bc5ad3d13cea.png)
 
 ### wsk CLI configuration
 ```
