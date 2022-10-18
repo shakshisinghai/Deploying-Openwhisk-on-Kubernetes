@@ -265,6 +265,11 @@ sudo mv wsk /usr/local/bin/wsk
 ```wsk --help```
 ![image](https://user-images.githubusercontent.com/37688219/160317058-fe8464ad-3c7b-4b75-8b3c-d1d896c7b1c3.png)
 
+```
+wsk property set --apihost <master_node_public_ip>:31001
+wsk property set --auth 23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP
+```
+
 ```wsk property get```
 ![image](https://user-images.githubusercontent.com/37688219/160317147-879d8e3e-1c6d-4fc1-b7ed-7e7e93a160aa.png)
  
