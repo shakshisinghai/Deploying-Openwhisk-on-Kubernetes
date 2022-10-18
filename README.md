@@ -219,8 +219,9 @@ invoker:
 ```
 * **Deploy OpenWhisk using the following commands:**
 ```
+kubectl create namespace openwhisk
 git clone https://github.com/apache/openwhisk-deploy-kube.git
-sudo helm install owdev .openwhisk-deploy-kube/helm/openwhisk --namespace=openwhisk -f mycluster.yaml
+helm install owdev .openwhisk-deploy-kube/helm/openwhisk --namespace=openwhisk -f mycluster.yaml
 ```
 
 * Check Logs:
