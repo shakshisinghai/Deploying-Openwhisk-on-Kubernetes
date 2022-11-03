@@ -226,8 +226,10 @@ invoker:
 ```
 kubectl create namespace openwhisk
 git clone https://github.com/apache/openwhisk-deploy-kube.git
+```
 
 * **For GPU Support add below in ./openwhisk-deploy-kube/helm/openwhisk/runtime.json file before blackboxes :**
+
 ```
 "deepspeech":[
             {
@@ -261,8 +263,10 @@ git clone https://github.com/apache/openwhisk-deploy-kube.git
                 }
             }
         ]
+
 ```
 
+```
 helm install owdev ./openwhisk-deploy-kube/helm/openwhisk --namespace=openwhisk -f mycluster.yaml
 ```
 
