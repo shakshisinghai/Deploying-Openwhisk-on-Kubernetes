@@ -220,13 +220,50 @@ metrics:
   userMetricsEnabled: true
 invoker:
   containerFactory:
-    impl: "docker"
+    impl: "kubernetes"
 ```
 * **Deploy OpenWhisk using the following commands:**
 ```
 kubectl create namespace openwhisk
 git clone https://github.com/apache/openwhisk-deploy-kube.git
-helm install owdev .openwhisk-deploy-kube/helm/openwhisk --namespace=openwhisk -f mycluster.yaml
+
+* **For GPU Support add below in ./openwhisk-deploy-kube/helm/openwhisk/runtime.json file before blackboxes :**
+```
+"deepspeech":[
+            {
+                "kind": "python:3ds@gpu",
+                "default": true,
+                "image": {
+                    "prefix": "docker5gmedia",
+                    "name": "python3dscudaaction",
+                    "tag": "latest"
+                },
+                "deprecated": false,
+                "attached": {
+                    "attachmentName": "codefile",
+                    "attachmentType": "text/plain"
+                }
+             }
+        ],
+        "cuda":[
+            {
+                "kind": "cuda:8@gpu",
+                "default": true,
+                "image": {
+                    "prefix": "docker5gmedia",
+                    "name": "cuda8action",
+                    "tag": "latest"
+                },
+                "deprecated": false,
+                "attached": {
+                "attachmentName": "codefile",
+                    "attachmentType": "text/plain"
+                }
+            }
+        ]
+```
+
+helm install owdev ./openwhisk-deploy-kube/helm/openwhisk --namespace=openwhisk -f mycluster.yaml
 ```
 
 * Check Logs:
