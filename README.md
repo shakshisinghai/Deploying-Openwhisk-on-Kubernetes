@@ -198,6 +198,9 @@ chmod 700 get_helm.sh
 
       ```kubectl label nodes --all openwhisk-role=invoker ```
 
+```
+kubectl cluster-info
+```
 
 * **Cluster configuration file setup (save as mycluster.yaml):**
 ```
