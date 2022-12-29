@@ -120,6 +120,9 @@ _Note: Run on master node_
 ``` 
 sudo kubeadm init --ignore-preflight-errors all --pod-network-cidr=10.244.0.0/16
 
+
+Error Resolve: https://serverfault.com/questions/1118051/failed-to-run-kubelet-validate-service-connection-cri-v1-runtime-api-is-not-im
+
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
